@@ -1,0 +1,209 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap');
+
+body {
+    line-height: 1.45;
+    margin: 0 auto;
+    max-width: 45rem;
+    padding: 15px;
+    font-size: 18px;
+    font-family: "Roboto Slab", monospace;
+    background: #fff;
+    color: black;
+}
+
+
+a:link {
+    font-weight: bold;
+    font-style: none;
+}
+
+.box {
+    background-color: #fff;
+    border: 1px solid #000;
+    border-radius: 0;
+    padding: 16px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.post {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.user-id {
+    font-size: 12px;
+    font-style: italic;
+    margin-bottom: 5px;
+}
+
+.date {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.message {
+    word-break: break-word;
+    margin-bottom: 10px;
+
+}
+.copy-link {
+    background-color: #c0c1f0;
+    border: 1px solid #000; /* Background color for the Copy Link text */
+    border-radius: 1px;
+    padding: 2px;
+    margin-left: 2px; /* Add some space between the date and Copy Link */
+    cursor: pointer;
+}
+.learn {
+    font-family: 'Roboto Slab', monospace;
+    font-size: 16px;
+    color: black;
+    background-color: #c0e9c6; /* Light tint of green */
+    border: 1px solid #000;
+    padding: 5px 5px; /* Adjusted padding */
+    border-radius: 1px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.learn:hover {
+    background-color: #e9c0c0; /* Darker tint of green on hover */
+}
+/* Textarea Styles */
+textarea {
+    width: calc(100% - 24px); /* Subtract padding (16px) from each side */
+    padding: 10px;
+    font-family: "Roboto Slab", monospace;
+    font-size: 16px;
+    border: 1px solid #000;
+    border-radius: 0;
+    margin-bottom: 10px;
+    height: auto; /* Set initial height to auto */
+    overflow-y: hidden; /* Hide vertical scrollbar */
+    resize: none; /* Disable resizing */
+}
+
+/* Placeholder Styles */
+textarea::placeholder {
+    font-family: "Roboto Slab", monospace;
+    color: #888;
+}
+
+
+button {
+    font-family: 'Roboto Slab', monospace;
+    font-size: 16px;
+    color: black;
+    background-color: #c0e9c6; /* Light tint of green */
+    border: 1px solid #000;
+    padding: 5px 5px; /* Adjusted padding */
+    border-radius: 1px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #e9c0c0; /* Darker tint of green on hover */
+}
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
+
+h1 {
+    margin-bottom: 5px; /* Reduce the distance between the title and links */
+}
+a:link {
+    font-family:'Roboto Slab', monospace;
+    color: black;
+    text-decoration: none;
+}
+a:visited {
+
+    color: black;
+    text-decoration: none;
+}
+
+
+.captcha-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+    gap: 10px; /* Add spacing between items */
+}
+
+/* Strikethrough Text Styles */
+.captcha-container .captcha-text {
+    font-size: 30px;
+    text-decoration: line-through;
+    color: red;
+    border: 1px solid black; /* Add a black border */
+    padding: 5px; /* Add padding for spacing */
+    font-family: "Micro 5 Charted", sans-serif;
+}
+
+
+
+/* Captcha Input and Button Container */
+.captcha-input-container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+    gap: 10px; /* Add spacing between items */
+}
+
+/* Captcha Input Styles */
+.captcha-input-container input[type="text"] {
+    width: 150px; /* Adjust the width as desired */
+    padding: 5px;
+    font-family: "Roboto Slab", monospace; /* Match the font family with the textarea */
+    font-size: 18px;
+    border: 1px solid #000;
+    border-radius: 0;
+}
+
+/* Captcha Input Placeholder Styles */
+.captcha-input-container input[type="text"]::placeholder {
+    font-family: "Roboto Slab", monospace; /* Match the font family with the textarea */
+    color: #888;
+}
+
+/* Post Button Styles */
+.captcha-input-container button {
+    font-family: 'Roboto Slab', monospace;
+    font-size: 16px;
+    color: black;
+    background-color: #c0e9c6; /* Light tint of green */
+    border: 1px solid #000;
+    padding: 5px 10px; /* Adjusted padding */
+    border-radius: 1px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.captcha-input-container button:hover {
+    background-color: #e9c0c0; /* Darker tint of green on hover */
+}
+
+
+@media (max-width: 480px) {
+    .captcha-container {
+        gap: 10px;
+    }
+}
+.small-text {
+    font-size: 15px;
+    padding-right: 10px;
+    text-decoration: none;
+    color: #666;
+    text-align: right;
+}
+
+.small-text:hover {
+    color: #333;
+}

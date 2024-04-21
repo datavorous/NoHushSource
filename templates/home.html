@@ -1,1 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
 
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FWT2H26NGJ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-FWT2H26NGJ');
+</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NoHush</title>
+    <link rel="stylesheet" href="static/index.css">
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+</head>
+<body>
+  <header>
+    <h1>NoHush <a href="https://nohush.neocities.org/help.html" class="small-text">Click Me?</a> <a href="https://nohush.neocities.org/invest.html" class="small-text">INVEST</a></h1>
+</header>
+    <div class="container">
+      <form action="/post" method="post">
+  <input type="hidden" id="message-id" name="message_id" value="{{ message_id }}">
+  <input type="hidden" id="user-id" name="user_id" value="">
+  <textarea name="message" rows="3" maxlength="500" placeholder="Share your original ideas and thoughts. No Censorship. Min 20 characters, Max 500." required></textarea>
+  <!-- Add honeypot field -->
+  <input type="text" name="honeypot" style="display: none;"> <!-- Hidden field -->
+  <div class="cf-turnstile" data-sitekey="0x4AAAAAAAXkS-fuHI8ozcYp"></div>
+  <input type="hidden" name="cf-turnstile-response">
+  <button type="submit">Post Now</button>
+</form>
+
+        <br>
+        <div class="feed">
+            {% for post in posts %}
+            <div class="box">
+                <div class="post">
+                    <div class="user-id">UID: {{ post.user_id }} MID: {{ post.message_id }}</div>
+                    <div class="message">{{ post.message }}</div>
+                    <div class="date">{{ post.date }} <span class="copy-link" data-message-id="{{ post.message_id }}">Link</span></div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        // Get user ID from localStorage or generate a new one
+        let userId = localStorage.getItem('userId');
+        if (!userId) {
+            userId = Math.floor(Math.random() * 9000) + 1000; // Random number between 1000 and 9999
+            localStorage.setItem('userId', userId);
+        }
+
+        // Add the user ID to the form
+        const userIdInput = document.getElementById('user-id');
+        userIdInput.value = userId;
+
+        // Get all copy link elements
+        const copyLinks = document.querySelectorAll('.copy-link');
+        copyLinks.forEach(link => {
+            link.addEventListener('click', (event) => { // Added event parameter here
+                const messageId = link.getAttribute('data-message-id');
+                const tempTextarea = document.createElement('textarea');
+                tempTextarea.value = "http://nohush.pythonanywhere.com/message/" + messageId;
+                document.body.appendChild(tempTextarea);
+                tempTextarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempTextarea);
+                event.target.innerHTML = "Copied"; // Changed here to target the clicked element
+            });
+        });
+
+        // Automatically adjust textarea height
+        const textarea = document.querySelector('textarea');
+        textarea.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = this.scrollHeight + 'px';
+        });
+
+        // Listen for right-click events on the document
+        document.addEventListener('contextmenu', function(event) {
+            event.preventDefault(); // Prevent the default right-click menu
+        });
+
+        // Listen for keyboard shortcuts commonly used to open developer tools
+        document.addEventListener('keydown', function(event) {
+            // Check if the key combination matches those used to open developer tools
+            if ((event.ctrlKey && event.shiftKey && event.keyCode === 73) || // Ctrl+Shift+I
+                (event.ctrlKey && event.shiftKey && event.keyCode === 67) || // Ctrl+Shift+C
+                (event.ctrlKey && event.shiftKey && event.keyCode === 74) || // Ctrl+Shift+J
+                (event.ctrlKey && event.keyCode === 123)) { // Ctrl+F12
+                event.preventDefault(); // Prevent the default action
+            }
+        });
+
+        // Listen for keydown events on the document
+        document.addEventListener('keydown', function(event) {
+            // Check if the key pressed is F12
+            if (event.keyCode === 123) { // F12 keycode
+                event.preventDefault(); // Prevent the default action
+            }
+        });
+
+    </script>
+</body>
+</html>

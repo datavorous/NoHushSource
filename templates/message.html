@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FWT2H26NGJ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-FWT2H26NGJ');
+</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NoHush::Message</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        .quote-box {
+            background-color: #c0e9c6;
+            margin-bottom: 10px;
+            border: 1px solid #000;
+            border-radius: 0;
+            padding: 16px;
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+        body {
+            line-height: 1.45;
+            margin: 0 auto;
+            max-width: 45rem;
+            padding: 15px;
+            font-size: 20px;
+            font-family: "Roboto Slab", monospace;
+            background: #fff;
+            color: black;
+        }
+        .user-id {
+            font-size: 12px;
+            font-style: italic;
+            margin-bottom: 5px;
+        }
+
+        .date {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .message {
+            word-break: break-word;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="quote-box">
+      <div class="box">
+          <div class="post">
+              <div class="user-id">UID: {{ post.user_id }} MID: {{ post.message_id }}</div>
+              <div class="message">{{ post.message }}</div>
+              <div class="date">{{ post.date }}</div>
+          </div>
+      </div>
+  </div>
+</body>
+</html>
