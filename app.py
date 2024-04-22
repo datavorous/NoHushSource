@@ -1,79 +1,72 @@
-from flask import Flask, render_template, request, redirect, session
+import os
 import json
 import random
-import os
-import requests
-from datetime import datetime, timedelta
+import string
+from flask import Flask, render_template, request, redirect, url_for, session
+
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'
+app.secret_key = os.urandom(24)
 
-# Load posts from database
-def load_posts():
-    if os.path.exists('posts.json'):
-        with open('posts.json', 'r') as f:
-            posts = json.load(f)
-    else:
-        posts = []
-    return posts
+# Load posts from the JSON file
+with open('data/posts.json', 'r') as f:
+    posts = json.load(f)
 
-# Save post to database
-def save_post(post):
-    posts = load_posts()
-    post['message_id'] = generate_message_id()  # Assign a message ID
-    posts.append(post)
-    with open('posts.json', 'w') as f:
-        json.dump(posts, f)
+# Enable/disable Turnstile (set to False for local development)
+ENABLE_TURNSTILE = True
 
-# Generate a message ID
+# Topic names
+topics = ['general', 'news']
+
+# Generate a random user ID
+def generate_user_id():
+    return ''.join(random.choices(string.ascii_letters + string.digits, k=8))
+
+# Generate a random message ID
 def generate_message_id():
-    return random.randint(10000, 999999)  # Adjust as needed for your requirements
+    return ''.join(random.choices(string.ascii_letters + string.digits, k=12))
 
 @app.route('/')
-def index():
-    posts = load_posts()
-    posts.sort(key=lambda x: x['date'], reverse=True)
-    message_id = generate_message_id()  # Generate a message ID
-    return render_template('home.html', posts=posts, message_id=message_id)
+def home():
+    if 'user_id' not in session:
+        session['user_id'] = generate_user_id()
+    return render_template('home.html', topics=topics)
 
-@app.route('/post', methods=['POST'])
-def post():
-    message = request.form['message']
-    turnstile_token = request.form.get('cf-turnstile-response')  # Get the Turnstile token
+@app.route('/topic/<topic_name>', methods=['GET', 'POST'])
+def topic(topic_name):
+    if topic_name not in topics:
+        return redirect(url_for('home'))
 
-    # Validate the Turnstile token
-    site_key = '0x4AAAAAAAXkS-fuHI8ozcYp'  # Your Turnstile site key
-    secret_key = '0x4AAAAAAAXkSxgpHIHpzNl9iLTcooaC8_w'  # Your Turnstile secret key
+    if request.method == 'POST':
+        message = request.form['message']
+        message_id = generate_message_id()
+        posts.setdefault(topic_name, []).append({
+            'message_id': message_id,
+            'user_id': session['user_id'],
+            'message': message,
+            'comments': []
+        })
+        save_posts()
 
-    response = requests.post(
-        'https://challenges.cloudflare.com/turnstile/v0/siteverify',
-        json={
-            'secret': secret_key,
-            'response': turnstile_token,
-            'sitekey': site_key,
-            'remoteip': request.remote_addr
-        }
-    )
+    return render_template('topic.html', topic_name=topic_name, posts=posts.get(topic_name, []))
 
-    if response.json().get('success', False):  # Check if Turnstile validation is successful
-        if len(message) >= 18 and len(message) <= 500:  # Message length validation
-            user_id = session.get('user_id')
-            if not user_id:
-                user_id = generate_user_id()
-                session['user_id'] = user_id
-            post = {'user_id': user_id, 'message': message, 'date': datetime.now().strftime("%d/%m/%y %H:%M:%S")}
-            save_post(post)
-    return redirect('/')
+@app.route('/post/<message_id>', methods=['GET', 'POST'])
+def post(message_id):
+    for topic, topic_posts in posts.items():
+        for post in topic_posts:
+            if post['message_id'] == message_id:
+                if request.method == 'POST':
+                    comment = request.form['comment']
+                    post['comments'].append({
+                        'user_id': session['user_id'],
+                        'comment': comment
+                    })
+                    save_posts()
+                return render_template('post.html', post=post)
+    return redirect(url_for('home'))
 
-@app.route('/message/<int:message_id>')  # Route to display a single message based on its ID
-def display_message(message_id):
-    posts = load_posts()
-    for post in posts:
-        if post.get('message_id') == message_id:
-            return render_template('message.html', post=post)
-    return "Message not found"
-
-def generate_user_id():
-    return random.randint(1000, 99999)
+def save_posts():
+    with open('data/posts.json', 'w') as f:
+        json.dump(posts, f)
 
 if __name__ == '__main__':
     app.run(debug=True)

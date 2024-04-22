@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>{{ topic_name.capitalize() }}</h2>
+<form method="post" action="{{ url_for('topic', topic_name=topic_name) }}">
+    <label for="message">Post a Message:</label>
+    <textarea id="message" name="message" required></textarea>
+    {% if ENABLE_TURNSTILE %}
+    <div class="cf-turnstile" data-sitekey="YOUR_SITE_KEY"></div>
+    {% endif %}
+    <button type="submit">Post</button>
+</form>
+<div id="posts">
+    {% for post in posts %}
+    <div class="post">
+        <p>{{ post['message'] }}</p>
+        <p class="meta">Posted by {{ post['user_id'] }} | <a href="{{ url_for('post', message_id=post['message_id']) }}">Comments</a></p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
