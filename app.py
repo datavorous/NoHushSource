@@ -15,7 +15,7 @@ with open('data/posts.json', 'r') as f:
 ENABLE_TURNSTILE = True
 
 # Topic names
-topics = ['general', 'news']
+topics = ['general', 'news', 'technology', 'sports', 'politics']
 
 # Generate a random user ID
 def generate_user_id():
@@ -47,7 +47,7 @@ def topic(topic_name):
         })
         save_posts()
 
-    return render_template('topic.html', topic_name=topic_name, posts=posts.get(topic_name, []))
+    return render_template('topic.html', topic_name=topic_name, posts=posts.get(topic_name, []), topics=topics)
 
 @app.route('/post/<message_id>', methods=['GET', 'POST'])
 def post(message_id):
@@ -69,4 +69,5 @@ def save_posts():
         json.dump(posts, f)
 
 if __name__ == '__main__':
+    app.config["TEMPLATES_AUTO_RELOAD"] = True
     app.run(debug=True)
