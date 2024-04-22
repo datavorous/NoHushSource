@@ -1,84 +1,70 @@
-# NoHushSource
-Anon does microblogging   
-Generated with claude: 
+# Documentation
 
-Certainly! Here's a comprehensive guide to help your team members understand the project source.
+## Overview
 
-**Introduction**
+A text-based forum web application built using Python Flask for the backend, HTML/CSS for the frontend, and vanilla JavaScript for client-side interactions. It allows users to post messages, comment on posts, and browse topics. The application incorporates features like session management, Turnstile integration for spam prevention, and dynamic content generation.
 
-This project is a Flask web application that allows users to post messages anonymously. The application uses JSON files to store the posts and implements basic security measures like Cloudflare's Turnstile CAPTCHA and message length validation. The project also includes some JavaScript functionality to enhance the user experience.
+## Folder Structure
 
-**File Structure**
+```
+imageboard/
+├── static/
+│   ├── css/
+│   │   └── style.css
+│   └── js/
+│       └── script.js
+├── templates/
+│   ├── base.html
+│   ├── home.html
+│   ├── topic.html
+│   └── post.html
+├── data/
+│   └── posts.json
+├── app.py
+└── requirements.txt
+```
 
-1. `app.py`: This is the main Python file that contains the Flask application logic.
-2. `home.html`: This is the HTML template for the home page, which displays the message feed and the posting form.
-3. `message.html`: This is the HTML template for displaying a single message.
-4. `index.css`: This file contains the CSS styles for the application.
+- **static/**: Contains static files such as CSS and JavaScript.
+- **templates/**: Contains HTML templates for rendering pages.
+- **data/**: Stores JSON data for posts.
+- **app.py**: Main Flask application file.
+- **requirements.txt**: Lists required Python packages.
 
-**app.py**
+## Components
 
-1. **Imports**: The file imports necessary modules and libraries, including Flask, json, random, os, requests, and datetime.
-2. **Flask App Initialization**: The Flask app is initialized, and a secret key is set for session management.
-3. **Database Functions**:
-   - `load_posts()`: This function loads the posts from the `posts.json` file or returns an empty list if the file doesn't exist.
-   - `save_post(post)`: This function saves a new post to the `posts.json` file by appending it to the existing list of posts.
-   - `generate_message_id()`: This function generates a random message ID for each new post.
-4. **Routes**:
-   - `@app.route('/')`: This route handles the home page request. It loads the posts, sorts them by date in descending order, generates a new message ID, and renders the `home.html` template with the posts and the new message ID.
-   - `@app.route('/post', methods=['POST'])`: This route handles the form submission for creating a new post. It validates the Turnstile CAPTCHA token, checks the message length, generates a user ID if none exists in the session, creates a new post dictionary with the user ID, message, and date, and saves the post using `save_post(post)`. Finally, it redirects the user to the home page.
-   - `@app.route('/message/<int:message_id>')`: This route displays a single message based on the provided `message_id`. It loads the posts, finds the matching post, and renders the `message.html` template with the post data.
-5. **Helper Function**: `generate_user_id()`: This function generates a random user ID between 1000 and 99999.
+### Backend (app.py)
 
-**home.html**
+- **Flask Routes**: Defines routes for handling HTTP requests.
+  - `/`: Renders the home page.
+  - `/topic/<topic_name>`: Renders a topic page and handles message posting.
+  - `/post/<message_id>`: Renders a post page and handles comment posting.
+- **Session Management**: Manages user sessions and generates unique user IDs.
+- **JSON Data Handling**: Loads and saves post data from/to `posts.json`.
+- **Turnstile Integration**: Integrates Turnstile for spam prevention.
 
-This file contains the HTML structure for the home page. It includes:
+### Frontend (templates/*.html, static/css/style.css, static/js/script.js)
 
-1. Google Analytics tracking code.
-2. A header with the application title and links.
-3. A container div containing:
-   - A form for posting a new message, including a textarea, a hidden message ID field, a hidden user ID field, a Cloudflare Turnstile CAPTCHA div, and a submit button.
-   - A div to display the feed of posts, with each post showing the user ID, message, date, and a "Copy Link" button.
-4. JavaScript code for:
-   - Storing and retrieving the user ID in localStorage.
-   - Copying the link to a specific message when the "Copy Link" button is clicked.
-   - Automatically adjusting the height of the textarea based on its content.
-   - Preventing the right-click context menu and certain keyboard shortcuts that may open developer tools.
+- **HTML Templates**: Define the structure of web pages using Jinja2 templating.
+  - `base.html`: Base template with header, navigation, and footer.
+  - `home.html`: Homepage template with a welcome message.
+  - `topic.html`: Template for displaying topics and posting messages.
+  - `post.html`: Template for displaying posts and comments.
+- **CSS Styling**: Defines styles for various elements to create a visually appealing UI.
+- **JavaScript**: Implements Turnstile validation for form submissions.
 
-**message.html**
+## Usage
 
-This file contains the HTML structure for displaying a single message. It includes:
+1. **Setup Environment**: Install Python and Flask.
+2. **Install Dependencies**: Install required Python packages using `pip install -r requirements.txt`.
+3. **Run the Application**: Execute `python app.py` to start the Flask server.
+4. **Access the Application**: Open a web browser and navigate to `http://localhost:5000` to access the Imageboard Forum.
+5. **Interact with the Forum**: Browse topics, post messages, and comment on posts.
 
-1. Google Analytics tracking code.
-2. A div containing the user ID, message ID, message text, and date.
-3. CSS styles for the message display.
+## External Dependencies
 
-**index.css**
+- **Flask**: Web framework for Python.
+- **Cloudflare Turnstile**: CAPTCHA-like system for spam prevention.
 
-This file contains the CSS styles for the entire application, including:
+---
 
-1. General styles for the body, links, boxes, posts, user IDs, dates, and messages.
-2. Styles for the "Copy Link" button.
-3. Styles for the textarea, button, and header.
-4. Styles for the Turnstile CAPTCHA container and input fields.
-5. Media queries for responsive design on smaller screens.
-6. Styles for the small text links in the header.
-
-**Usage**
-
-To run the application locally, follow these steps:
-
-1. Install the required dependencies (Flask and requests).
-2. Run the `app.py` file using `python app.py` or `flask run`.
-3. Access the application in your web browser at `http://localhost:5000`.
-
-**Deployment**
-
-The application is currently deployed on PythonAnywhere. To access the live version, visit `http://nohush.pythonanywhere.com`.
-
-**Security Considerations**
-
-While the application implements basic security measures like message length validation and Cloudflare's Turnstile CAPTCHA, it's important to note that it does not implement comprehensive security measures for storing and displaying user-generated content. Additional measures, such as input sanitization, content filtering, and secure storage, should be implemented before deploying the application to a production environment.
-
-**Contributions and Collaboration**
-
-If you wish to contribute to the project or collaborate with your team members, you can follow standard Git workflow practices, such as creating branches, making changes, and submitting pull requests. Ensure that your team members have access to the project repository and coordinate your efforts to avoid conflicts.
+This documentation provides an overview of the Imageboard Forum application, its structure, functionality, and usage instructions. It serves as a guide for understanding and using the codebase effectively.
