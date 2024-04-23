@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shinudoha</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+</head>
+<body>
+    <h1>Shinudoha</h1><h4>"Language can be that kind of knife, the thing that cuts through to the truth" - Salman Rushdie</h4>
+    <ul>
+        {% for topic in topics %}
+        <li><a href="{{ url_for('topic', topic_name=topic['name']) }}">>> {{ topic['name'] }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

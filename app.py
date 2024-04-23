@@ -1,73 +1,119 @@
-import os
+from flask import Flask, render_template, request, redirect, session, url_for
 import json
 import random
-import string
-from flask import Flask, render_template, request, redirect, url_for, session
+import os
+from datetime import datetime
 
 app = Flask(__name__)
-app.secret_key = os.urandom(24)
+app.secret_key = 'your_secret_key'
+app.config['DISABLE_TURNSTILE'] = False # Add this line to disable Turnstile during local development
 
-# Load posts from the JSON file
-with open('data/posts.json', 'r') as f:
-    posts = json.load(f)
+# Load posts from database
+def load_posts():
+    if os.path.exists('posts.json'):
+        with open('posts.json', 'r') as f:
+            data = json.load(f)
+            return data.get('topics', [])
+    else:
+        return []
 
-# Enable/disable Turnstile (set to False for local development)
-ENABLE_TURNSTILE = True
+from uuid import uuid4  # Import uuid4 function to generate unique message IDs
 
-# Topic names
-topics = ['general', 'news', 'technology', 'sports', 'politics']
+@app.route('/new_post/<topic_name>', methods=['POST'])
+def new_post(topic_name):
+    message = request.form['message']
+    user_id = session.get('user_id')
+    if not user_id:
+        user_id = generate_user_id()
+        session['user_id'] = user_id
 
-# Generate a random user ID
-def generate_user_id():
-    return ''.join(random.choices(string.ascii_letters + string.digits, k=8))
+    # Generate a unique message_id
+    message_id = str(uuid4())
 
-# Generate a random message ID
+    # Create the new post with the message_id
+    post = {
+        'user_id': user_id,
+        'message': message,
+        'date': datetime.now().strftime("%d/%m/%y %H:%M:%S"),
+        'message_id': message_id  # Assign the generated message_id
+    }
+
+    # Save the new post
+    save_post(topic_name, post)
+
+    return redirect(url_for('topic', topic_name=topic_name))
+
+
+# Save post to database
+def save_post(topic_name, post):
+    data = {'topics': load_posts()}
+    topic = next((t for t in data['topics'] if t['name'] == topic_name), None)
+    if topic is None:
+        topic = {'name': topic_name, 'posts': []}
+        data['topics'].append(topic)
+
+    existing_post = next((p for p in topic['posts'] if p['message_id'] == post['message_id']), None)
+    if existing_post:
+        existing_post.update(post)
+    else:
+        post['message_id'] = generate_message_id()
+        topic['posts'].append(post)
+
+    with open('posts.json', 'w') as f:
+        json.dump(data, f)
+
+# Generate a message ID
 def generate_message_id():
-    return ''.join(random.choices(string.ascii_letters + string.digits, k=12))
+    return random.randint(10000, 999999)  # Adjust as needed for your requirements
 
 @app.route('/')
-def home():
-    if 'user_id' not in session:
-        session['user_id'] = generate_user_id()
-    return render_template('home.html', topics=topics)
+def index():
+    topics = load_posts()
+    return render_template('index.html', topics=topics)
 
-@app.route('/topic/<topic_name>', methods=['GET', 'POST'])
+@app.route('/topic/<topic_name>')
 def topic(topic_name):
-    if topic_name not in topics:
-        return redirect(url_for('home'))
-
-    if request.method == 'POST':
-        message = request.form['message']
-        message_id = generate_message_id()
-        posts.setdefault(topic_name, []).append({
-            'message_id': message_id,
-            'user_id': session['user_id'],
-            'message': message,
-            'comments': []
-        })
-        save_posts()
-
-    return render_template('topic.html', topic_name=topic_name, posts=posts.get(topic_name, []), topics=topics)
+    topics = load_posts()
+    topic = next((t for t in topics if t['name'] == topic_name), None)
+    if topic is None:
+        return "Topic not found"
+    posts = topic.get('posts', [])
+    posts.sort(key=lambda x: x['date'], reverse=True)
+    message_id = generate_message_id()
+    return render_template('home.html', posts=posts, message_id=message_id, topic_name=topic_name)
 
 @app.route('/post/<message_id>', methods=['GET', 'POST'])
 def post(message_id):
-    for topic, topic_posts in posts.items():
-        for post in topic_posts:
-            if post['message_id'] == message_id:
+    posts = load_posts()
+    for topic in posts:
+        for post in topic.get('posts', []):
+            if post.get('message_id') == int(message_id):
                 if request.method == 'POST':
                     comment = request.form['comment']
-                    post['comments'].append({
-                        'user_id': session['user_id'],
-                        'comment': comment
+                    user_id = session.get('user_id')
+                    if not user_id:
+                        user_id = generate_user_id()
+                        session['user_id'] = user_id
+                    post.setdefault('comments', []).append({
+                        'user_id': user_id,
+                        'comment': comment,
+                        'date': datetime.now().strftime("%d/%m/%y %H:%M:%S")
                     })
-                    save_posts()
-                return render_template('post.html', post=post)
-    return redirect(url_for('home'))
+                    save_post(topic['name'], post)
+                return render_template('message.html', post=post)
+    return "Message not found"
 
-def save_posts():
-    with open('data/posts.json', 'w') as f:
-        json.dump(posts, f)
+@app.route('/message/<int:message_id>')
+def display_message(message_id):
+    posts = load_posts()
+    for topic in posts:
+        for post in topic.get('posts', []):
+            if post.get('message_id') == message_id:
+                return render_template('message.html', post=post)
+    return "Message not found"
+
+def generate_user_id():
+    return random.randint(1000, 99999)
 
 if __name__ == '__main__':
-    app.config["TEMPLATES_AUTO_RELOAD"] = True
     app.run(debug=True)

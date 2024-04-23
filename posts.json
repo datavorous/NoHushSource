@@ -1,0 +1,24 @@
+{
+  "topics": [
+    {
+      "name": "general",
+      "posts": []
+    },
+    {
+      "name": "journalism",
+      "posts": []
+    },
+    {
+      "name": "arts and cult",
+      "posts": []
+    },
+    {
+      "name": "sci and tech",
+      "posts": []
+    },
+    {
+      "name": "nsfw",
+      "posts": []
+    }
+  ]
+}
