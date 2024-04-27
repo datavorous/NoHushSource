@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NoHush - {{ topic_name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+    <!-- Add Turnstile script -->
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>/{{ topic_name }}/</h1>
+    </header>
+    <div class="container">
+        <!-- Form for posting new messages -->
+        <form id="demo" action="{{ url_for('new_post', topic_name=topic_name) }}" method="post">
+            <textarea name="message" rows="5" maxlength="1000" placeholder="No Dictatorship. Speak. Max 1000 characters, min 20." required></textarea>
+            <div class="cf-turnstile" data-sitekey="0x4AAAAAAAXkS-fuHI8ozcYp"></div>
+  <input type="hidden" name="cf-turnstile-response">
+            <button type="submit">Post</button><br><br>
+        </form>
+        <!-- Display existing posts -->
+        {% for post in posts %}
+        <div class="box">
+            <div class="post">
+                <div class="user-id">UID: {{ post.user_id }} MID: {{ post.message_id }}</div>
+                <div class="message">{{ post.message }}</div>
+                <div class="date">{{ post.date }}</div>
+                <!-- Add a link to view comments for each post -->
+                <div class="view-comments">
+                    <a href="/message/{{ post.message_id }}">View Comments</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <script>
+    const textarea = document.querySelector('textarea');
+        textarea.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = this.scrollHeight + 'px';
+        });
+        // Function to set the Turnstile token in the form
+// Prevent F12 and right-clicks
+window.addEventListener('keydown', function (e) {
+  if (e.keyCode === 123 || e.button === 2) {
+    e.preventDefault();
+  }
+});
+document.addEventListener('contextmenu', function(event) {
+    event.preventDefault();
+});
+// Prevent additional keyboard shortcuts
+window.addEventListener('keydown', function (e) {
+  if ((e.ctrlKey && [73, 75, 83].includes(e.keyCode)) || // Ctrl+I, Ctrl+K, Ctrl+Shift+K, Ctrl+Shift+S
+      (e.metaKey && e.altKey && [73, 67].includes(e.keyCode))) { // Meta+Alt+I (MacOS), Meta+Alt+C (MacOS)
+    e.preventDefault();
+  }
+});
+
+    </script>
+</body>
+</html>
+

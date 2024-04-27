@@ -1,0 +1,194 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap');
+
+body {
+    font-size:20px;
+    line-height: 1.45;
+    margin: 0 auto;
+    max-width: 45rem;
+    padding: 15px;
+    font-family: "Roboto Slab", monospace;
+    background: white;
+    color: #333333;
+}
+
+a:link {
+    font-weight: bold;
+    font-style: none;
+    color: #333333;
+}
+
+/*.container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+*/
+.box {
+    background-color: #ffffff;
+    border: 2px solid #333333;
+    border-radius: 0;
+    padding: 16px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+        font-size: 17px;
+    }
+
+    .box {
+        padding: 10px;
+    }
+
+    button,
+    nav a {
+        font-size: 14px;
+    }
+
+    h1 {
+        font-size: 30px;
+    }
+
+    .user-id {
+        font-size: 10px;
+    }
+
+    .date {
+        font-size: 12px;
+    }
+}
+
+.post {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.user-id {
+    font-size: 12px;
+    font-style: italic;
+    margin-bottom: 5px;
+    color: #333333;
+}
+
+.date {
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #333333;
+}
+
+.message, .comment-text {
+    word-break: break-word;
+    margin-bottom: 10px;
+}
+
+.view-comments a {
+    text-decoration: none;
+    color: #333333;
+}
+
+textarea {
+    width: 100%; /* Set maximum width to 100% of its container */
+    /*width: calc(100% - 24px); /* Subtract padding (16px) from each side */
+    padding: 10px;
+    font-family: "Roboto Slab", monospace;
+    font-size: 16px;
+    border: 1px solid #000;
+    border-radius: 0;
+    margin-bottom: 10px;
+    height: auto; /* Set initial height to auto */
+    overflow-y: hidden; /* Hide vertical scrollbar */
+    resize: none; /* Disable resizing */
+    box-sizing: border-box; /* Include padding and border in width calculation */
+}
+
+
+/* Placeholder Styles */
+textarea::placeholder {
+    font-family: "Roboto Slab", monospace;
+    color: #888;
+}
+
+
+button {
+    font-family: 'Roboto Slab', monospace;
+    font-size: 16px;
+    color: #ffffff;
+    background-color: #333333;
+    border: 2px solid #333333;
+    padding: 5px 5px;
+    border-radius: 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #222222;
+}
+
+nav {
+    margin-top: 10px;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+nav li {
+    margin-right: 10px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #333333;
+    padding: 5px 10px;
+    border: 2px solid #333333;
+    border-radius: 0;
+    transition: background-color 0.3s ease;
+}
+
+nav a:hover {
+    background-color: #333333;
+    color: #ffffff;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
+
+h1 {
+    margin-bottom: 5px;
+    color: #333333;
+}
+
+a:link {
+    font-family: 'Roboto Slab', monospace;
+    text-decoration: none
+    color:#333333;
+}
+
+a:visited {
+    color: #333333;
+    text-decoration: none;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 5px;
+}
