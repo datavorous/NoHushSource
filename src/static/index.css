@@ -1,32 +1,38 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap');
+/* Importing Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Reddit+Sans&display=swap');
 
+/* Base Styles */
 body {
-    font-size:20px;
+    font-family: 'Reddit Sans', sans-serif;
+    font-size: 20px;
     line-height: 1.45;
     margin: 0 auto;
     max-width: 45rem;
     padding: 15px;
-    font-family: "Roboto Slab", monospace;
-    background: white;
+    background-color: #f6f7f8;
     color: #333333;
 }
 
-a:link {
+h1 {
+    margin-bottom: 5px;
+    color: #333333;
+}
+
+a:link, a:visited {
     font-weight: bold;
-    font-style: none;
-    color: #333333;
+    color: #ff6b6b;
+    text-decoration: none;
 }
 
-/*.container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+a:hover {
+    text-decoration: underline;
 }
-*/
+
+/* Container Styles */
 .box {
     background-color: #ffffff;
-    border: 2px solid #333333;
-    border-radius: 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
     padding: 16px;
     margin-bottom: 10px;
     display: flex;
@@ -35,52 +41,16 @@ a:link {
     box-sizing: border-box;
 }
 
-/* Mobile Responsive Styles */
-@media (max-width: 480px) {
-    body {
-        padding: 10px;
-        font-size: 17px;
-    }
-
-    .box {
-        padding: 10px;
-    }
-
-    button,
-    nav a {
-        font-size: 14px;
-    }
-
-    h1 {
-        font-size: 30px;
-    }
-
-    .user-id {
-        font-size: 10px;
-    }
-
-    .date {
-        font-size: 12px;
-    }
-}
-
 .post {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 }
 
-.user-id {
+.user-id, .date {
     font-size: 12px;
-    font-style: italic;
     margin-bottom: 5px;
-    color: #333333;
-}
-
-.date {
-    font-size: 14px;
-    margin-bottom: 5px;
-    color: #333333;
+    color: #888888;
 }
 
 .message, .comment-text {
@@ -89,49 +59,54 @@ a:link {
 }
 
 .view-comments a {
+    color: #ff6b6b;
     text-decoration: none;
-    color: #333333;
 }
 
+/* Textarea Styles */
 textarea {
-    width: 100%; /* Set maximum width to 100% of its container */
-    /*width: calc(100% - 24px); /* Subtract padding (16px) from each side */
+    width: 100%;
     padding: 10px;
-    font-family: "Roboto Slab", monospace;
+    font-family: 'Reddit Sans', sans-serif;
     font-size: 16px;
-    border: 1px solid #000;
-    border-radius: 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
     margin-bottom: 10px;
-    height: auto; /* Set initial height to auto */
-    overflow-y: hidden; /* Hide vertical scrollbar */
-    resize: none; /* Disable resizing */
-    box-sizing: border-box; /* Include padding and border in width calculation */
+    height: auto;
+    overflow-y: hidden;
+    resize: none;
+    box-sizing: border-box;
 }
 
-
-/* Placeholder Styles */
 textarea::placeholder {
-    font-family: "Roboto Slab", monospace;
     color: #888;
 }
 
+/* Button Styles */
+button
+{
+    font-size:17px;
+    display: inline-block;
+    font-family: 'Reddit Sans',sans-serif ;
+    padding: 0.5rem 1rem;
+    margin: 0.5rem;
+    border-radius: 5px;
+    border: 2px black;
+    background-color: #e0e0e0;
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
 
-button {
-    font-family: 'Roboto Slab', monospace;
-    font-size: 16px;
-    color: #ffffff;
-    background-color: #333333;
-    border: 2px solid #333333;
-    padding: 5px 5px;
-    border-radius: 0;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: #222222;
+    background-color: #ff6b6b;
+    color: black;
 }
 
+/* Navigation Styles */
 nav {
     margin-top: 10px;
 }
@@ -150,40 +125,19 @@ nav li {
 
 nav a {
     text-decoration: none;
-    color: #333333;
+    color: #ff6b6b;
     padding: 5px 10px;
-    border: 2px solid #333333;
-    border-radius: 0;
+    border: 2px solid #ff6b6b;
+    border-radius: 5px;
     transition: background-color 0.3s ease;
 }
 
 nav a:hover {
-    background-color: #333333;
+    background-color: #ff6b6b;
     color: #ffffff;
 }
 
-header {
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-}
-
-h1 {
-    margin-bottom: 5px;
-    color: #333333;
-}
-
-a:link {
-    font-family: 'Roboto Slab', monospace;
-    text-decoration: none
-    color:#333333;
-}
-
-a:visited {
-    color: #333333;
-    text-decoration: none;
-}
-
+/* List Styles */
 ul {
     list-style-type: none;
     padding: 0;
@@ -191,4 +145,84 @@ ul {
 
 li {
     margin-bottom: 5px;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+        font-size: 17px;
+    }
+
+    .box {
+        padding: 10px;
+    }
+
+    button, nav a {
+        font-size: 17px;
+    }
+
+    h1 {
+        font-size: 30px;
+    }
+
+    .user-id, .date {
+        font-size: 10px;
+    }
+}
+
+/* Dark Mode Styles */
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1a1a1b;
+        color: #d7dadc;
+    }
+
+    h1 {
+        color: #d7dadc;
+    }
+
+    a:link, a:visited {
+        color: #ff6b6b;
+    }
+
+    .box {
+        background-color: #272729;
+        border: 1px solid #343536;
+    }
+
+    textarea {
+        background-color: #272729;
+        color: #d7dadc;
+        border: 1px solid #343536;
+    }
+
+    textarea::placeholder {
+        color: #888;
+    }
+
+    button {
+        background-color: rgba(255, 255, 255, 0.2);
+        color: #d7dadc;
+    }
+
+    button:hover {
+        background-color: #ff6b6b;
+        color: #fff;
+    }
+
+    nav a {
+        color: #ff6b6b;
+        background-color: #272729;
+        border: 2px solid #ff6b6b;
+    }
+
+    nav a:hover {
+        background-color: #ff6b6b;
+        color: #ffffff;
+    }
+
+    .user-id, .date {
+        color: #888;
+    }
 }
