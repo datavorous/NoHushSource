@@ -15,12 +15,28 @@
     <div class="container">
         <!-- Form for posting new messages -->
         <form id="demo" action="{{ url_for('new_post', topic_name=topic_name) }}" method="post">
-            <textarea name="message" rows="5" maxlength="1000" placeholder="No Dictatorship. Speak. Max 1000 characters, min 20." required></textarea>
+            <textarea name="message" rows="5" maxlength="1000" placeholder="Max 1000 characters, min 20." required></textarea>
             <div class="cf-turnstile" data-sitekey="0x4AAAAAAAXkS-fuHI8ozcYp"></div>
   <input type="hidden" name="cf-turnstile-response">
             <button type="submit">Post</button><br><br>
         </form>
         <!-- Display existing posts -->
+
+        <div class="box">
+            <div class="post">
+                <div class="user-id"><b style="color:#6bff77;">Pinned Post</b> | <b>ADMIN</b></div>
+                <div class="message"><b>Welcome to NoHush!</b><br>
+				<p style="font-size: 15px;">
+				We are delighted to have you join our community. At NoHush, we believe in the power of unrestricted expression while maintaining a respectful and engaging environment. To ensure a positive experience for everyone, please <b>Be Civil and Respectful, Follow <a href="https://britannica.com/topic/netiquette">Internet Etiquette</a></b>. Do not forget to <b>Stay on Topic</b>, to keep our conversations organized and meaningful, this helps everyone follow the conversation and contribute effectively.<br><br>
+				Thank you for being part of NoHush. Together, we can create a <b>Vibrant, Unbiased and Respectful</b> community (unlike X or Facebook), where every voice can be heard.<br>
+				Happy posting!<br>
+				— The NoHush Team</p>
+                </div>
+                <div class="date">31st May, 2024</div>
+            </div>
+        </div>
+
+
         {% for post in posts %}
         <div class="box">
             <div class="post">
@@ -63,4 +79,5 @@ window.addEventListener('keydown', function (e) {
     </script>
 </body>
 </html>
+
 
