@@ -6,7 +6,6 @@
 
 We're so Retro, We're almost Futuristic. 
 
-![GitHub license](https://img.shields.io/github/license/datavorous/NoHushSource)
 ![Python version](https://img.shields.io/badge/python-3.8%2B-blue)
 ![Flask version](https://img.shields.io/badge/flask-2.0%2B-green)
 
@@ -45,11 +44,6 @@ We're so Retro, We're almost Futuristic.
    ```
 
 Visit `http://localhost:5000` in your browser to see NoHush in action!
-
-## 📸 Screenshots
-
-![Homepage](placeholder-for-homepage-screenshot.png)
-![Topic Page](placeholder-for-topic-page-screenshot.png)
 
 ## 🤝 Contributing
 
