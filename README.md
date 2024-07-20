@@ -1,14 +1,19 @@
+<div align="center">
+   
 # NoHush
+   
+<img src="logo.png" alt="NoHush Logo" width="128" height="128">  
 
-![NoHush Logo](placeholder-for-logo.png)
-
-NoHush is an open-source platform designed to facilitate anonymous unrestricted expression while (hopefully) maintaining a respectful and engaging environment. Built with Flask and modern web technologies, NoHush aims to provide a space for meaningful discussions on various topics. 
-
-We're so Retro, We're almost Futuristic.
+We're so Retro, We're almost Futuristic. 
 
 ![GitHub license](https://img.shields.io/github/license/datavorous/nohush)
 ![Python version](https://img.shields.io/badge/python-3.8%2B-blue)
 ![Flask version](https://img.shields.io/badge/flask-2.0%2B-green)
+
+</div>
+
+NoHush is an open-source platform designed to facilitate anonymous unrestricted expression while (hopefully) maintaining a respectful and engaging environment. Built with Flask and modern web technologies, NoHush aims to provide a space for meaningful discussions on various topics. 
+
 
 ## 🌟 Features
 
