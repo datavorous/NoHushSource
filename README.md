@@ -1,6 +1,6 @@
 <div align="center">
    
-# NoHush
+# [NoHush](https://nohush.pythonanywhere.com/)
    
 <img src="logo.png" alt="NoHush Logo" width="128" height="128">  
 
@@ -12,7 +12,7 @@ We're so Retro, We're almost Futuristic.
 
 </div>
 
-NoHush is an open-source platform designed to facilitate anonymous unrestricted expression while (hopefully) maintaining a respectful and engaging environment. Built with Flask and modern web technologies, NoHush aims to provide a space for meaningful discussions on various topics. 
+[NoHush](https://nohush.pythonanywhere.com/) is an open-source platform designed to facilitate anonymous unrestricted expression while (hopefully) maintaining a respectful and engaging environment. Built with Flask and modern web technologies, NoHush aims to provide a space for meaningful discussions on various topics. 
 
 
 ## 🌟 Features
@@ -34,19 +34,10 @@ NoHush is an open-source platform designed to facilitate anonymous unrestricted 
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/nohush.git
+   git clone https://github.com/datavorous/nohushsource.git
    ```
-
 2. Install dependencies:
-   ```
-   pip install -r requirements.txt
-   ```
-
 3. Set up environment variables:
-   ```
-   cp .env.example .env
-   ```
-   Edit `.env` with your configuration.
 
 4. Run the application:
    ```
@@ -122,4 +113,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-Made with Apathy by Datavorous
