@@ -16,7 +16,7 @@
         <!-- Form for posting new messages -->
         <form id="demo" action="{{ url_for('new_post', topic_name=topic_name) }}" method="post">
             <textarea name="message" rows="5" maxlength="1000" placeholder="Max 1000 characters, min 20." required></textarea>
-            <div class="cf-turnstile" data-sitekey="0x4AAAAAAAXkS-fuHI8ozcYp"></div>
+            <div class="cf-turnstile" data-sitekey="HAKUNA"></div>
   <input type="hidden" name="cf-turnstile-response">
             <button type="submit">Post</button><br><br>
         </form>
